@@ -1,0 +1,53 @@
+{
+	"compilerOptions": {
+		"target": "ES2015",
+		// "module": "ESNext",
+		"module": "ESNext",
+		"moduleResolution": "Node",
+		"strict": true,
+		"skipLibCheck": true,
+		"lib": ["ESNext"],
+		"types": ["@cloudflare/workers-types"],
+		"jsx": "react-jsx",
+		"jsxImportSource": "hono/jsx",
+		/** baseUrl 用来告诉编译器到哪里去查找模块，使用非相对模块时必须配置此项 */
+		"baseUrl": ".",
+		/** 非相对模块导入的路径映射配置，根据 baseUrl 配置进行路径计算 */
+		"paths": {
+			"@/*": ["src/*"]
+		},
+		"isolatedModules": true,
+		"esModuleInterop": true,
+		// "noEmit": true,
+		"rootDir": "./src",
+		"outDir": "dist",
+		"forceConsistentCasingInFileNames": true,
+		"plugins": [
+			{
+				"name": "typescript-lit-html-plugin",
+				"tags": ["html", "template"]
+			}
+		]
+	},
+	"ts-node": {
+		"esm": true,
+		"transpileOnly": true,
+		"files": true,
+		"experimentalResolver": true
+	},
+	"include": [
+		"src/**/*.ts",
+		"src/**/*.d.ts",
+		"src/**/*.tsx",
+		"src/**/*.vue",
+		"tests/**/*.ts",
+		"types/**/*.d.ts",
+		"vite.config.ts",
+		"vitest.config.ts",
+		"worker-configuration.d.ts",
+		"src/*.d.ts",
+		"src/types.d.ts"
+	],
+	/** 编译器默认排除的编译文件 */
+	"exclude": ["dist", "test"]
+}

@@ -1,0 +1,28 @@
+{
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev src/index.ts",
+    "deploy": "wrangler deploy --minify src/index.ts",
+    "node:dev": "tsx --watch ./src/node-runner.ts",
+    "build": "npx esbuild ./src/node-runner.ts --bundle --minify --outfile=./dist/bundle.js --platform=node --format=esm"
+  },
+  "dependencies": {
+    "@hono/node-server": "^1.11.1",
+    "hono": "^4.3.10"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20240403.0",
+    "@types/node": "^20.12.12",
+    "esbuild": "0.21.3",
+    "lit-html": "^3.1.3",
+    "prettier": "3.2.5",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.5",
+    "wrangler": "^3.47.0"
+  },
+  "paths": {
+    "@/*": [
+      "src/*"
+    ]
+  }
+}
