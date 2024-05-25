@@ -1,10 +1,6 @@
 // Running Hono in Vercel.
 import app from '@/index'
-import { handle } from 'hono/vercel'
+import { handle } from '@hono/node-server/vercel'
 
 // Run it on the Vercel edge
-export const config = {
-	runtime: 'edge',
-}
-
 export default handle(app)
