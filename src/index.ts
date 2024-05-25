@@ -1,5 +1,5 @@
-import { Hono } from 'hono'
 // import { serveStatic } from 'hono/cloudflare-workers'
+import { Hono } from 'hono'
 
 // custom
 import { exceptionHandler } from '@/exception'
