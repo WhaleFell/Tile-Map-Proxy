@@ -5,8 +5,7 @@
     "deploy": "wrangler deploy --minify src/index.ts",
     "node:dev": "tsx --watch ./src/node-runner.ts",
     "vercel:dev":"vercel dev",
-
-    "build": "echo 🔥"
+    "build": "npx esbuild ./src/vercel-runner.ts --bundle --minify --outfile=./api/index.js --platform=node --format=cjs"
   },
   "dependencies": {
     "@hono/node-server": "^1.11.1",
