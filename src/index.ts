@@ -2,10 +2,10 @@
 import { Hono } from 'hono'
 
 // custom
-import { exceptionHandler } from '@/exception'
-import defaultRoute from '@/routers/default'
-import mapRoute from '@/routers/map'
-import { renderHTML, renderItems } from '@/HTMLRender'
+import { exceptionHandler } from './exception'
+import defaultRoute from './routers/default'
+import mapRoute from './routers/map'
+import { renderHTML, renderItems } from './HTMLRender'
 import { MapSourceList } from './routers/map/mapSources'
 
 const app = new Hono({ strict: false })

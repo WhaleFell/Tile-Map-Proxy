@@ -1,11 +1,11 @@
 {
-  "type": "commonjs",
+  "type": "module",
   "scripts": {
-    "dev": "wrangler dev src/index.ts",
-    "deploy": "wrangler deploy --minify src/index.ts",
+    "cf:dev": "wrangler dev src/index.ts",
+    "cf:deploy": "wrangler deploy --minify src/index.ts",
     "node:dev": "tsx --watch ./src/node-runner.ts",
-    "vercel:dev":"vercel dev",
-    "build": "npx esbuild ./src/vercel-runner.ts --bundle --minify --outfile=./api/index.js --platform=node --format=cjs"
+    "build": "npx esbuild ./src/vercel-runner.ts --bundle --minify --outfile=./api/index.js --platform=node --format=esm",
+    "vercel:dev":"vercel dev"
   },
   "dependencies": {
     "@hono/node-server": "^1.11.1",

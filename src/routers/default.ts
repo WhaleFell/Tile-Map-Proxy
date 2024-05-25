@@ -2,7 +2,7 @@
 import { Hono } from 'hono'
 import { getRuntimeKey } from 'hono/adapter'
 import { StatusCode } from 'hono/utils/http-status'
-import { delHeaderLengthMiddleware, customFetch } from '@/utils'
+import { delHeaderLengthMiddleware, customFetch } from '../utils'
 
 const defaultRoute = new Hono()
 

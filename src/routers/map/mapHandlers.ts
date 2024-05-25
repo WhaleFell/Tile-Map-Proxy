@@ -1,4 +1,4 @@
-import { customFetch } from '@/utils'
+import { customFetch } from '../../utils'
 
 const replaceKey = (url: string, key: string, value: string): string => {
 	return url.replace('${' + key + '}', value)
