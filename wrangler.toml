@@ -4,7 +4,12 @@ main = "./src/index.ts"
 
 [site]
 # static directory
-bucket = "./assets"
+bucket = "./public"
+
+[dev]
+ip = "0.0.0.0"
+port = 8080
+local_protocol = "http"
 
 
 # [vars]

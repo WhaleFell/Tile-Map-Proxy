@@ -16,8 +16,6 @@ app.get('/', (c) => {
 	return c.html(renderHTML('items', renderItems(MapSourceList, hostname)))
 })
 
-// app.get('/favicon.ico', serveStatic({ path: 'favicon.ico', manifest: {} }))
-
 // exception handler
 exceptionHandler(app)
 

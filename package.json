@@ -4,8 +4,8 @@
     "cf:dev": "wrangler dev src/index.ts",
     "cf:deploy": "wrangler deploy --minify src/index.ts",
     "node:dev": "tsx --watch ./src/node-runner.ts",
-    "build": "npx esbuild ./src/vercel-runner.ts --bundle --minify --outfile=./api/index.js --platform=node --format=esm",
-    "vercel:dev":"vercel dev"
+    "vercel:build": "npx esbuild ./src/vercel-runner.ts --bundle --minify --outfile=./api/index.js --platform=node --format=esm",
+    "vercel:dev":"npx esbuild ./src/vercel-runner.ts --bundle --minify --outfile=./api/index.js --platform=node --format=esm && vercel dev --listen 0.0.0.0:5000"
   },
   "dependencies": {
     "@hono/node-server": "^1.11.1",
