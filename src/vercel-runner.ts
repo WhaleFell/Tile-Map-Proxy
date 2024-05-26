@@ -2,4 +2,9 @@
 import app from './index'
 import { handle } from '@hono/node-server/vercel'
 
+export const config = {
+	supportsResponseStreaming: true,
+	runtime: 'nodejs', // or 'nodejs'
+}
+
 export default handle(app)

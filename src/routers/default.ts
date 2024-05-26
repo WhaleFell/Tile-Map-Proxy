@@ -39,9 +39,10 @@ defaultRoute.all('/proxy', validatorURLMiddleware, delHeaderLengthMiddleware, as
 })
 
 defaultRoute.get('/speedtest', async (c) => {
-	const url = 'http://lg-tok.fdcservers.net/10GBtest.zip'
-	const rep = await customFetch(url, { headers: c.req.raw.headers, method: 'get' })
+	const url = 'https://github.com/AaronFeng753/Waifu2x-Extension-GUI/releases/download/v2.21.12/Waifu2x-Extension-GUI-v2.21.12-Portable.7z'
+	const rep = await customFetch(url, { headers: c.req.raw.headers, method: c.req.method })
 	console.log(`[defaultRoute] Speedtest from ${url}...`)
+	// return new Response(rep.body, { headers: rep.headers, status: rep.status })
 	return c.newResponse(rep.body, rep.status as StatusCode, Object.fromEntries(rep.headers))
 })
 

@@ -3,7 +3,7 @@ import { Handler } from 'hono'
 const generateHeaders = (url: string): HeadersInit => {
 	const copiedURL = new URL(url)
 
-	return {
+	return new Headers({
 		'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3',
 		Origin: copiedURL.host,
 		Referer: copiedURL.origin,
@@ -15,14 +15,40 @@ const generateHeaders = (url: string): HeadersInit => {
 		Pragma: 'no-cache',
 		Connection: 'keep-alive',
 		'Upgrade-Insecure-Requests': '1',
+	})
+}
+
+function isObject(value: any) {
+	return value !== null && typeof value === 'object'
+}
+
+function mergeHeaders(...sources: HeadersInit[]) {
+	const result: any = {}
+
+	for (const source of sources) {
+		if (!isObject(source)) {
+			throw new TypeError('All arguments must be of type object')
+		}
+
+		const headers: Headers = new Headers(source)
+
+		for (const [key, value] of headers.entries()) {
+			if (value === undefined || value === 'undefined') {
+				delete result[key]
+			} else {
+				result[key] = value
+			}
+		}
 	}
+
+	return new Headers(result)
 }
 
 export const customFetch = async (url: string, options?: RequestInit, timeout: number = 8000): Promise<Response> => {
 	const retryLimit = 3
 	let retries = 0
 	let error
-	const mergedHeaders = { ...generateHeaders(url), ...options?.headers }
+	const mergedHeaders = mergeHeaders(generateHeaders(url), options?.headers ? options.headers : {})
 	console.log(`[customFetch] ${url} Fetching data...`)
 	while (retries < retryLimit) {
 		try {
