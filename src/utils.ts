@@ -21,6 +21,7 @@ const generateHeaders = (url: string): HeadersInit => {
 export const customFetch = async (url: string, options?: RequestInit, timeout: number = 8000): Promise<Response> => {
 	const retryLimit = 3
 	let retries = 0
+	let error
 	const mergedHeaders = { ...generateHeaders(url), ...options?.headers }
 	console.log(`[customFetch] ${url} Fetching data...`)
 	while (retries < retryLimit) {
@@ -36,11 +37,12 @@ export const customFetch = async (url: string, options?: RequestInit, timeout: n
 			}
 			retries++
 		} catch (error) {
+			error = error
 			console.error(`[customFetch] ${url} Failed to fetch data: ${error} and retrying...`)
 			retries++
 		}
 	}
-	throw new Error(`[customFetch] ${url} Failed to fetch data after ${retries} retries`)
+	throw new Error(`[customFetch] ${url} Failed to fetch data after ${retries} retries reason: ${error}`)
 }
 
 export const delHeaderLengthMiddleware: Handler = async (c, next) => {
