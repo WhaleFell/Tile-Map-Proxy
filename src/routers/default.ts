@@ -3,7 +3,7 @@ import { Hono } from 'hono'
 import { getRuntimeKey } from 'hono/adapter'
 import { validator } from 'hono/validator'
 import { StatusCode } from 'hono/utils/http-status'
-import { delHeaderLengthMiddleware, customFetch } from '../utils'
+import { delHeaderLengthMiddleware, customFetch, mergeHeaders } from '../utils'
 
 const defaultRoute = new Hono()
 
@@ -31,10 +31,11 @@ const validatorURLMiddleware = validator('query', (value, c) => {
 	}
 })
 
-defaultRoute.all('/proxy', validatorURLMiddleware, delHeaderLengthMiddleware, async (c) => {
+defaultRoute.all('/proxy', validatorURLMiddleware, async (c) => {
 	const url = c.req.valid('query').url
 	console.log(`[defaultRoute] Fetching data from ${url}...`)
-	const rep = await customFetch(url, { headers: c.req.raw.headers, method: c.req.method })
+	const rep = await customFetch(url, { headers: mergeHeaders(c.req.raw.headers, { 'Accept-Encoding': 'identity' }), method: c.req.method })
+	// const rep = await fetch(url, { headers: c.req.raw.headers, method: c.req.method })
 	return c.newResponse(rep.body, rep.status as StatusCode, Object.fromEntries(rep.headers))
 })
 

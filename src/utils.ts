@@ -1,6 +1,6 @@
 import { Handler } from 'hono'
 
-const generateHeaders = (url: string): HeadersInit => {
+export const generateHeaders = (url: string): HeadersInit => {
 	const copiedURL = new URL(url)
 
 	return new Headers({
@@ -22,7 +22,7 @@ function isObject(value: any) {
 	return value !== null && typeof value === 'object'
 }
 
-function mergeHeaders(...sources: HeadersInit[]) {
+export function mergeHeaders(...sources: HeadersInit[]) {
 	const result: any = {}
 
 	for (const source of sources) {
@@ -44,6 +44,8 @@ function mergeHeaders(...sources: HeadersInit[]) {
 	return new Headers(result)
 }
 
+// TODO: hono fetch issue: TypeError: Response body object should not be disturbed or locked
+// https://github.com/honojs/hono/issues/1695
 export const customFetch = async (url: string, options?: RequestInit, timeout: number = 8000): Promise<Response> => {
 	const retryLimit = 3
 	let retries = 0
