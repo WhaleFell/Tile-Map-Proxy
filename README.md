@@ -20,7 +20,7 @@ Vercel:
 
 Cloudflare:
 
-[![Deploy to Cloudflare Workers](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url==https://github.com/whalefell/Tile-Map-Proxy)
+[![Deploy to Cloudflare Workers](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/whalefell/Tile-Map-Proxy)
 
 ## Develop
 
