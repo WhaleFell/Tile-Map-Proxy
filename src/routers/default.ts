@@ -39,6 +39,14 @@ defaultRoute.all('/proxy', validatorURLMiddleware, async (c) => {
 	return c.newResponse(rep.body, rep.status as StatusCode, Object.fromEntries(rep.headers))
 })
 
+defaultRoute.get('/down', validatorURLMiddleware, async (c) => {
+	const url = c.req.valid('query').url
+	console.log(`[defaultRoute] Fetching data from ${url}...`)
+	const rep = await customFetch(url, { headers: c.req.raw.headers, method: c.req.method })
+	// const rep = await fetch(url, { headers: c.req.raw.headers, method: c.req.method })
+	return c.newResponse(rep.body, rep.status as StatusCode, Object.fromEntries(rep.headers))
+})
+
 defaultRoute.get('/speedtest', async (c) => {
 	const url = 'https://github.com/AaronFeng753/Waifu2x-Extension-GUI/releases/download/v2.21.12/Waifu2x-Extension-GUI-v2.21.12-Portable.7z'
 	const rep = await customFetch(url, { headers: c.req.raw.headers, method: c.req.method })
