@@ -52,6 +52,7 @@ export const customFetch = async (url: string, options?: RequestInit, timeout: n
 	let error
 	const mergedHeaders = mergeHeaders(generateHeaders(url), options?.headers ? options.headers : {})
 	console.log(`[customFetch] ${url} Fetching data...`)
+
 	while (retries < retryLimit) {
 		try {
 			// const response = await fetch(url, options)

@@ -10,7 +10,7 @@
 		"declaration": true,
 		"sourceMap": true,
 		"lib": ["ESNext"],
-		"types": ["@cloudflare/workers-types"],
+		"types": ["@cloudflare/workers-types", "@types/node"],
 		"jsx": "react-jsx",
 		"jsxImportSource": "hono/jsx",
 		/** baseUrl 用来告诉编译器到哪里去查找模块，使用非相对模块时必须配置此项 */

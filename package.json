@@ -5,11 +5,12 @@
     "cf:deploy": "wrangler deploy --minify src/index.ts",
     "node:dev": "tsx --watch ./src/node-runner.ts",
     "vercel:build": "npx esbuild ./src/vercel-runner.ts --bundle --minify --outfile=./api/index.js --platform=node --format=esm && node addConfig.js ./api/index.js",
-    "vercel:dev":"npx esbuild ./src/vercel-runner.ts --bundle --minify --outfile=./api/index.js --platform=node --format=esm && vercel dev --listen 0.0.0.0:5000"
+    "vercel:dev": "npx esbuild ./src/vercel-runner.ts --bundle --minify --outfile=./api/index.js --platform=node --format=esm && vercel dev --listen 0.0.0.0:5000"
   },
   "dependencies": {
     "@hono/node-server": "^1.11.1",
-    "hono": "^4.3.10"
+    "dotenv": "^16.4.5",
+    "undici": "^6.18.1"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20240403.0",
