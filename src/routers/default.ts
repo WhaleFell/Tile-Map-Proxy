@@ -38,4 +38,11 @@ defaultRoute.all('/proxy', validatorURLMiddleware, delHeaderLengthMiddleware, as
 	return c.newResponse(rep.body, rep.status as StatusCode, Object.fromEntries(rep.headers))
 })
 
+defaultRoute.get('/speedtest', async (c) => {
+	const url = 'http://lg-tok.fdcservers.net/10GBtest.zip'
+	const rep = await customFetch(url, { headers: c.req.raw.headers, method: 'get' })
+	console.log(`[defaultRoute] Speedtest from ${url}...`)
+	return c.newResponse(rep.body, rep.status as StatusCode, Object.fromEntries(rep.headers))
+})
+
 export default defaultRoute
