@@ -14,13 +14,13 @@ Feature:
 
 It support `Cloudflare Workers` and `Vercel Edge Functions` and `NodeJS Native` !
 
-```shell
-pnpm install
-pnpm run dev:node
-pnpm run dev
-# bundle the code
-pnpm run build
-```
+Vercel:
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/whalefell/Tile-Map-Proxy)
+
+Cloudflare:
+
+[![Deploy to Cloudflare Workers](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url==https://github.com/whalefell/Tile-Map-Proxy)
 
 ## Develop
 
