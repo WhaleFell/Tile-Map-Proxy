@@ -15,16 +15,17 @@ defaultRoute.get('/runtime', (c) => {
 	return c.json({ runtime: getRuntimeKey() })
 })
 
-const URL_REGEX = /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/
+const URL_REGEX = /(http|https):\/\/([\w.]+\/?)\S*/gi
 
 const validatorURLMiddleware = validator('query', (value, c) => {
 	if (typeof value.url !== 'string') {
 		return c.json({ error: `Invalid URL ${value.url}` }, 400)
 	}
 
-	if (!URL_REGEX.test(value.url)) {
-		return c.json({ error: `Invalid URL ${value.url}` }, 400)
-	}
+	// if (!URL_REGEX.test(value.url)) {
+	// 	console.log(`[validatorURLMiddleware] Invalid URL ${value.url}`)
+	// 	return c.json({ error: `Invalid URL ${value.url}` }, 400)
+	// }
 
 	return {
 		url: value.url,
