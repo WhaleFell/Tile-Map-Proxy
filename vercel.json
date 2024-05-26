@@ -1,5 +1,5 @@
 {
-  "buildCommand": "pnpm install && pnpm run vercel:build",
+  "buildCommand": "pnpm run vercel:build",
   "rewrites": [
     {
       "source": "/(.*)",
