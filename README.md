@@ -46,6 +46,7 @@ build and setup:
 docker build -t tile-map-proxy .
 docker-compose build
 docker-compose up -d
+docker compose down --volumes --rmi all
 ```
 
 ## Compatibility
