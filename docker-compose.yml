@@ -1,6 +1,7 @@
-name: TileMapProxyWithProxy
+name: tile-map-proxyWithProxy
 
-version: '3.4'
+#  `version` is obsolete
+# version: '3.4'
 
 services:
   tilemapproxy:
