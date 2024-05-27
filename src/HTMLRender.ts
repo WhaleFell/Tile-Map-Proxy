@@ -236,6 +236,7 @@ const HTMLTamplate = `
 		</style>
 		<script>
 			const CoordinatesKey = 'coordinates'
+			const defaultCoordinates = { x: 1670, y: 891, z: 11 }
 
 			function handleCopy(event) {
 				const text = event.target.parentElement.querySelector('span').innerText
@@ -263,7 +264,7 @@ const HTMLTamplate = `
 				localStorage.setItem(CoordinatesKey, JSON.stringify({ x, y, z }))
 			}
 			function loadXYZFromLocalStorage() {
-				let { x, y, z } = JSON.parse(localStorage.getItem(CoordinatesKey)) || { x: '', y: '', z: '' }
+				let { x, y, z } = JSON.parse(localStorage.getItem(CoordinatesKey)) || defaultCoordinates
 				document.querySelector('.preview_params input[name="x"]').value = x
 				document.querySelector('.preview_params input[name="y"]').value = y
 				document.querySelector('.preview_params input[name="z"]').value = z
