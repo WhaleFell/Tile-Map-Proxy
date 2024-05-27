@@ -1,4 +1,4 @@
-name: tile-map-proxyWithProxy
+name: tile-map-proxy-with-proxy
 
 #  `version` is obsolete
 # version: '3.4'
@@ -29,6 +29,7 @@ services:
     
     # ports:
       # - 10809:10809
+    command: v2ray -config=/etc/v2ray/config.json run
 
 networks:
   default:
