@@ -25,7 +25,8 @@ services:
     container_name: v2ray
     volumes:
       - ./v2.json:/etc/v2ray/config.json
-    ports:
+    
+    # ports:
       # - 10809:10809
 
 networks:
