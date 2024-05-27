@@ -23,4 +23,19 @@ mapRoute.get('/:type/:x{[0-9]+}/:y{[0-9]+}/:z{[0-9]+}', async (c) => {
 	return response
 })
 
+mapRoute.get('/list', async (c) => {
+	const url = new URL(c.req.url)
+	const hostname = url.origin
+
+	const result = MapSourceList.map((map: MapSource) => {
+		return {
+			name: map.name,
+			type: map.type,
+			url: `${hostname}/map/${map.type}/{x}/{y}/{z}`,
+		}
+	})
+
+	return c.json(result)
+})
+
 export default mapRoute
