@@ -62,7 +62,7 @@
 			"settings": {
 				"servers": [
 					{
-						"address": "jp4.lvuy.xyz",
+						"address": "jp3.lvuy.xyz",
 						"method": "chacha20-ietf-poly1305",
 						"ota": false,
 						"password": "gFqySwAaukt0IYMf",
@@ -105,28 +105,6 @@
 	"routing": {
 		"domainStrategy": "IPOnDemand",
 		"rules": [
-			{
-				"type": "field",
-				"inboundTag": ["api"],
-				"outboundTag": "api"
-			},
-			{
-				"type": "field",
-				"port": "1-65535",
-				"outboundTag": "direct",
-				"domain": ["localhost"]
-			},
-			{
-				"type": "field",
-				"port": "1-65535",
-				"outboundTag": "direct",
-				"ip": ["geoip:private", "127.0.0.1"]
-			},
-			{
-				"type": "field",
-				"outboundTag": "proxy",
-                "ip":["1.1.1.1", "1.0.0.1"]                
-			},
 			{
 				"type": "field",
 				"port": "1-65535",
