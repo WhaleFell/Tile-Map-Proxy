@@ -57,7 +57,7 @@ export const customFetch = async (url: string, options?: RequestInit, timeout: n
 		try {
 			// const response = await fetch(url, options)
 			const response = await Promise.race([
-				fetch(url, { ...options, headers: mergedHeaders }),
+				fetch(url, { ...options, headers: mergedHeaders, keepalive: true }),
 				new Promise((_, reject) => setTimeout(() => reject('TIMEOUT'), timeout)),
 			])
 

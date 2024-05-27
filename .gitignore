@@ -2,6 +2,7 @@ node_modules
 dist
 .wrangler
 .dev.vars
+.env
 
 # Change them to your taste:
 package-lock.json
@@ -10,4 +11,3 @@ pnpm-lock.yaml
 bun.lockb
 .vercel
 .env*.local
-.env

@@ -10,6 +10,15 @@ import path from 'path'
 import { env } from 'process'
 import { existsSync } from 'fs'
 
+// disable console logs in production
+// use esbuild to remove console logs in production
+// esbuild --drop:debugger --drop:console
+// if (process.env.NODE_ENV == 'production') {
+// 	console.log = () => {}
+// 	console.error = () => {}
+// 	console.debug = () => {}
+// }
+
 // In node 20, we can use `node --env-file .env` to load env variables from a file
 // so not needed to load dotenv
 
