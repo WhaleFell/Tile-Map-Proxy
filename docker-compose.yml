@@ -34,7 +34,7 @@ services:
     
     # ports:
       # - 10809:10809
-    command: -config=/etc/v2ray/config.json run
+    command: run -c /etc/v2ray/config.json
 
 
 networks:

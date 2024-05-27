@@ -44,9 +44,13 @@ build and setup:
 
 ```shell
 docker build -t tile-map-proxy .
-docker-compose build
-docker-compose up -d
+docker compose build
+docker compose up -d
 docker compose down --volumes --rmi all
+
+# remove all unused resources
+docker network prune
+docker volume prune
 ```
 
 ## Compatibility
