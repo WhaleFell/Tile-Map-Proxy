@@ -3,7 +3,9 @@
   "scripts": {
     "cf:dev": "wrangler dev src/index.ts",
     "cf:deploy": "wrangler deploy --minify src/index.ts",
-    "node:dev": "tsx --watch ./src/node-runner.ts",
+    "node:dev": "tsx  --watch ./src/node-runner.ts",
+    "node:build":"npx esbuild ./src/node-runner.ts --bundle --minify --packages=external --outfile=./dist/index.js --platform=node --format=esm",
+    "node:run":"node ./dist/index.js",
     "vercel:build": "npx esbuild ./src/vercel-runner.ts --bundle --minify --outfile=./api/index.js --platform=node --format=esm && node addConfig.js ./api/index.js",
     "vercel:dev": "npx esbuild ./src/vercel-runner.ts --bundle --minify --outfile=./api/index.js --platform=node --format=esm && vercel dev --listen 0.0.0.0:5000"
   },
@@ -12,6 +14,9 @@
     "dotenv": "^16.4.5",
     "hono": "^4.3.11",
     "undici": "^6.18.1"
+  },
+  "engines": {
+    "node": ">=20.0.0"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20240403.0",

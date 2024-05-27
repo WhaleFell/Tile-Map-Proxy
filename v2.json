@@ -1,0 +1,137 @@
+{
+	"policy": {
+		"system": {
+			"statsOutboundUplink": true,
+			"statsOutboundDownlink": true
+		}
+	},
+	"log": {
+		"access": "",
+		"error": "",
+		"loglevel": "warning"
+	},
+	"inbounds": [
+		{
+			"tag": "socks",
+			"port": 10808,
+			"listen": "0.0.0.0",
+			"protocol": "socks",
+			"sniffing": {
+				"enabled": true,
+				"destOverride": ["http", "tls"],
+				"routeOnly": false
+			},
+			"settings": {
+				"auth": "noauth",
+				"udp": true,
+				"allowTransparent": false
+			}
+		},
+		{
+			"tag": "http",
+			"port": 10809,
+			"listen": "0.0.0.0",
+			"protocol": "http",
+			"sniffing": {
+				"enabled": true,
+				"destOverride": ["http", "tls"],
+				"routeOnly": false
+			},
+			"settings": {
+				"auth": "noauth",
+				"udp": true,
+				"allowTransparent": false
+			}
+		},
+		{
+			"tag": "api",
+			"port": 9090,
+			"listen": "127.0.0.1",
+			"protocol": "dokodemo-door",
+			"settings": {
+				"udp": false,
+				"address": "127.0.0.1",
+				"allowTransparent": false
+			}
+		}
+	],
+	"outbounds": [
+		{
+			"tag": "proxy",
+			"protocol": "shadowsocks",
+			"settings": {
+				"servers": [
+					{
+						"address": "jp4.lvuy.xyz",
+						"method": "chacha20-ietf-poly1305",
+						"ota": false,
+						"password": "gFqySwAaukt0IYMf",
+						"port": 10058,
+						"level": 1
+					}
+				]
+			},
+			"streamSettings": {
+				"network": "tcp"
+			},
+			"mux": {
+				"enabled": false,
+				"concurrency": -1
+			}
+		},
+		{
+			"tag": "direct",
+			"protocol": "freedom",
+			"settings": {}
+		},
+		{
+			"tag": "block",
+			"protocol": "blackhole",
+			"settings": {
+				"response": {
+					"type": "http"
+				}
+			}
+		}
+	],
+	"stats": {},
+	"api": {
+		"tag": "api",
+		"services": ["StatsService"]
+	},
+	"dns": {
+		"servers": ["https://1.0.0.1/dns-query"]
+	},
+	"routing": {
+		"domainStrategy": "IPOnDemand",
+		"rules": [
+			{
+				"type": "field",
+				"inboundTag": ["api"],
+				"outboundTag": "api"
+			},
+			{
+				"type": "field",
+				"port": "1-65535",
+				"outboundTag": "direct",
+				"domain": ["localhost"]
+			},
+			{
+				"type": "field",
+				"port": "1-65535",
+				"outboundTag": "direct",
+				"ip": ["geoip:private", "127.0.0.1"]
+			},
+			{
+				"type": "field",
+				"outboundTag": "proxy",
+                "ip":["1.1.1.1", "1.0.0.1"]                
+			},
+			{
+				"type": "field",
+				"port": "1-65535",
+				"outboundTag": "proxy"
+			}
+		]
+	}
+}

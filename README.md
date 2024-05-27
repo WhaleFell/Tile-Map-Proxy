@@ -22,6 +22,36 @@ Cloudflare:
 
 [![Deploy to Cloudflare Workers](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/whalefell/Tile-Map-Proxy)
 
+Docker:
+
+configure the docker mirror if u need:
+
+```shell
+sudo mkdir -p /etc/docker
+sudo nano /etc/docker/daemon.json
+{
+    "registry-mirrors": [
+        "https://dockerproxy.com",
+        "https://docker.mirrors.ustc.edu.cn",
+        "https://docker.nju.edu.cn"
+    ]
+}
+sudo systemctl daemon-reload
+sudo systemctl restart docker
+```
+
+build and setup:
+
+```shell
+docker build -t tile-map-proxy .
+docker-compose build
+docker-compose up -d
+```
+
+## Compatibility
+
+This project is ueing latest NodeJS LTS(Long Time support) version(v20.13.1). And it use the es6 module system(not CommonJS) and TypeScript. So make sure your `package.json` have type: `module` and `engines` >=20.0.0
+
 ## Develop
 
 ```shell

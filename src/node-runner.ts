@@ -2,20 +2,46 @@
 // https://github.com/honojs/node-server
 import app from './index'
 import { serve } from '@hono/node-server'
-import { config } from 'dotenv'
-import { env } from 'process'
 import { setGlobalDispatcher, ProxyAgent } from 'undici'
+import { config } from 'dotenv'
 
-config({ path: '.env' })
+// standard node modules
+import path from 'path'
+import { env } from 'process'
+import { existsSync } from 'fs'
 
+// In node 20, we can use `node --env-file .env` to load env variables from a file
+// so not needed to load dotenv
+
+// if .env file is detected, load it
+const envFilePath = path.resolve('.env')
+console.log(`.env file path: ${envFilePath}`)
+
+// 判断 .env 文件是否存在
+if (existsSync(envFilePath)) {
+	// 加载 .env 文件中的环境变量
+	config({ path: envFilePath })
+	console.log('.env file found and loaded')
+} else {
+	console.log('.env file not found')
+}
+
+// set global dispatcher to use proxy in fetch
 // https://stackoverflow.com/questions/72306101/make-a-request-in-native-fetch-with-proxy-in-nodejs-18
-if (env.https_proxy) {
-	console.log(`Using http proxy: ${env.https_proxy}`)
+if (env.HTTP_PROXY) {
+	console.log(`Using http proxy: ${env.HTTP_PROXY}`)
 	process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'
-	const dispatcher = new ProxyAgent({ uri: new URL(env.https_proxy).toString() })
+	const dispatcher = new ProxyAgent({ uri: new URL(env.HTTP_PROXY).toString() })
 	setGlobalDispatcher(dispatcher)
 }
 
-serve(app, (info) => {
-	console.log(`Listening on http://localhost:${info.port}`) // Listening on http://localhost:3000
-})
+serve(
+	{
+		fetch: app.fetch,
+		port: Number(env.PORT) ? Number(env.PORT) : 3000,
+		hostname: env.HOST || 'localhost',
+	},
+	(info) => {
+		console.log(`Listening on http://localhost:${info.port}`)
+	},
+)

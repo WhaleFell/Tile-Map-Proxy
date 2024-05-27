@@ -43,7 +43,8 @@
 		"vitest.config.ts",
 		"worker-configuration.d.ts",
 		"src/*.d.ts",
-		"src/types.d.ts"
+		"src/types.d.ts",
+		"src/environment.d.ts"
 	],
 	/** 编译器默认排除的编译文件 */
 	"exclude": ["dist", "test"]
