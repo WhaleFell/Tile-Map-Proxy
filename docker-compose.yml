@@ -19,6 +19,10 @@ services:
       # local:container
       - 3000:3000
     
+    restart: always
+    depends_on:
+      - v2ray
+
     command: pnpm run node:run
 
   v2ray:
@@ -26,10 +30,12 @@ services:
     container_name: v2ray
     volumes:
       - ./v2.json:/etc/v2ray/config.json
+    restart: always
     
     # ports:
       # - 10809:10809
     command: v2ray -config=/etc/v2ray/config.json run
+
 
 networks:
   default:
