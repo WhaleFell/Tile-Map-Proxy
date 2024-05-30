@@ -28,7 +28,7 @@ const XYZ2TMS = (x: number, y: number, z: number) => {
 }
 
 export const TMSProtocolMapHandler = async (sourceUrl: string, params: MapParams): Promise<Response> => {
-  // Note that some tile-based maps provided TMS(tailed map service) scheme
+  // Note that some tile-based maps provided TMS (Tailed Map Service) scheme
   // so we need to convert it to Google XYZ scheme
   // There are no advantages of XYZ over TMS for most maps, but XYZ is more popular.
   // The only difference between the XYZ and TWS is the Y coordinate.
@@ -176,6 +176,9 @@ function xyzToQuadkey(x: number, y: number, zoom: number): string {
   return quadkey
 }
 
+/**
+ * Handle the map request with quadtree coordinate
+ */
 export const quadtreeMapHandle = async (sourceUrl: string, params: MapParams): Promise<Response> => {
   let newURL = sourceUrl
   newURL = replaceKey(newURL, "quadkey", xyzToQuadkey(parseInt(params.x), parseInt(params.y), parseInt(params.z)))
