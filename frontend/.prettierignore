@@ -1,0 +1,9 @@
+# Prettier 会忽略的文件
+# Prettier will ignore these files
+
+.DS_Store
+node_modules
+dist
+dist-ssr
+*.local
+.npmrc

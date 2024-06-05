@@ -1,0 +1,41 @@
+{
+  "name": "vue3-vuetify-unocss-tamplate",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "run-p type-check \"build-only {@}\" --",
+    "preview": "vite preview",
+    "build-only": "vite build",
+    "type-check": "vue-tsc --build --force"
+  },
+  "dependencies": {
+    "@vue-leaflet/vue-leaflet": "^0.10.1",
+    "axios": "^1.7.2",
+    "leaflet": "^1.9.4",
+    "mitt": "^3.0.1",
+    "nprogress": "^0.2.0",
+    "pinia": "^2.1.7",
+    "vue": "^3.4.21",
+    "vue-router": "^4.3.0",
+    "vuetify": "^3.6.7"
+  },
+  "devDependencies": {
+    "@iconify-json/mdi": "^1.1.66",
+    "@mdi/font": "^7.4.47",
+    "@tsconfig/node20": "^20.1.4",
+    "@types/node": "^20.12.5",
+    "@types/nprogress": "^0.2.3",
+    "@unocss/preset-icons": "^0.60.3",
+    "@vitejs/plugin-vue": "^5.0.4",
+    "@vue/tsconfig": "^0.5.1",
+    "npm-run-all2": "^6.1.2",
+    "prettier": "^3.2.5",
+    "typescript": "~5.4.0",
+    "unocss": "^0.60.3",
+    "vite": "^5.2.8",
+    "vite-plugin-vuetify": "^2.0.3",
+    "vue-tsc": "^2.0.11"
+  }
+}
