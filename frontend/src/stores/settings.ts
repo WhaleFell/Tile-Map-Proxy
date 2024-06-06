@@ -18,6 +18,9 @@ const defaultSettings: Settings = {
   theme: "light"
 }
 
+// Best practices for Vue 3 stores:
+// https://masteringpinia.com/blog/ref-vs-reactive-in-stores
+
 export const useSettingsStore = defineStore("config", () => {
   const state = {} as SettingsStore
 

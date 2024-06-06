@@ -7,7 +7,7 @@ import { notify } from "./notify"
 
 const request: AxiosInstance = axios.create({
   // baseURL: "https://some-domain.com/api/",
-  timeout: 1000
+  timeout: 9000
   // headers: { "X-Custom-Header": "foobar" }
 })
 
