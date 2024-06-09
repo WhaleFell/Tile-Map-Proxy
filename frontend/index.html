@@ -3,8 +3,16 @@
   <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no" />
-    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <!-- allow mixed content HTTP/HTTPS -->
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" />
+    <meta
+      name="viewport"
+      content="width=device-width,initial-scale=1.0,user-scalable=no"
+    />
+    <meta
+      name="viewport"
+      content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"
+    />
     <title>%VITE_APP_TITLE%</title>
     <style>
       #loader-wrapper {
@@ -94,8 +102,8 @@
   <body>
     <noscript>
       <strong
-        >We're sorry but yearlybill doesn't work properly without JavaScript enabled. Please enable it to
-        continue.</strong
+        >We're sorry but yearlybill doesn't work properly without JavaScript enabled.
+        Please enable it to continue.</strong
       >
     </noscript>
     <div id="app">

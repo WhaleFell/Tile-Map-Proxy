@@ -1,4 +1,3 @@
 {
   "buildCommand": "pnpm run build-only"
-
-  }
+}

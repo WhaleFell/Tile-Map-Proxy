@@ -22,7 +22,7 @@ interface MapOptions {
   mapSource: MapSource
 }
 
-export const useMapStore = defineStore("counter", () => {
+export const useMapStore = defineStore("map", () => {
   // state
   const mapOptions = ref<MapOptions>({
     postion: { lat: 30.67, lng: 104.06 },
