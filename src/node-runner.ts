@@ -48,7 +48,7 @@ serve(
 	{
 		fetch: app.fetch,
 		port: Number(env.PORT) ? Number(env.PORT) : 3000,
-		hostname: env.HOST || 'localhost',
+		hostname: env.HOST || '0.0.0.0',
 	},
 	(info) => {
 		console.log(`Listening on http://localhost:${info.port}`)
