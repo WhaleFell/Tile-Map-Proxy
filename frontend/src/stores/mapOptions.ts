@@ -22,6 +22,10 @@ interface MapOptions {
   mapSource: MapSource
 }
 
+const isHttps = (): boolean => {
+  return location.protocol === "https:"
+}
+
 export const useMapStore = defineStore("map", () => {
   // state
   const mapOptions = ref<MapOptions>({
@@ -42,7 +46,15 @@ export const useMapStore = defineStore("map", () => {
     const url = new URL(mapsApi.value)
     const api = url.origin + "/map/list"
     const { data } = await request.get(api)
-    maps.value = data
+    data as Array<MapSource>
+
+    // if the current page is https, replace the http with https
+    maps.value = data.map((item: MapSource) => {
+      return {
+        ...item,
+        url: isHttps() ? item.url.replace("http://", "https://") : item.url
+      }
+    })
   }
 
   const selectMap = (type: string) => {

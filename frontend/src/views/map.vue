@@ -29,6 +29,15 @@
         name="google-satellite"
         :attribution="mapContributors"
         :max-zoom="22"
+        :opacity="0.3"
+      ></l-tile-layer>
+
+      <l-tile-layer
+        url="http://192.168.8.220:3000/map/gm/{x}/{y}/{z}"
+        layer-type="base"
+        name="google-map"
+        attribution="overlay test"
+        :max-zoom="22"
         :opacity="0.8"
       ></l-tile-layer>
     </l-map>
