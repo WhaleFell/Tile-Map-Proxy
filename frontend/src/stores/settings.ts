@@ -1,6 +1,6 @@
 import { ref, watch, type Ref } from "vue"
 import { defineStore } from "pinia"
-import { notify } from "@/utils/notify"
+import { notify } from "@/utils/popup"
 
 interface Settings {
   footer: boolean

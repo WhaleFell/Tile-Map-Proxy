@@ -3,7 +3,7 @@ import axios, {
   type AxiosRequestConfig,
   type AxiosError
 } from "axios"
-import { notify } from "./notify"
+import { notify } from "./popup"
 
 const request: AxiosInstance = axios.create({
   // baseURL: "https://some-domain.com/api/",

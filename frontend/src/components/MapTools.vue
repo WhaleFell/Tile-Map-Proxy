@@ -21,13 +21,23 @@
           <v-list-item
             color="primary"
             rounded="shaped"
-            v-for="map in mapStore.maps"
-            :key="map.type"
-            :value="map"
-            :active="mapStore.mapOptions.mapSource.type === map.type"
-            @click.stop="mapStore.selectMap(map.type)"
+            v-for="map in sortedMapItems"
+            :active="mapStore.listLayersName.includes(map.name)"
+            @click.stop="
+              mapStore.listLayersName.includes(map.name)
+                ? mapStore.removeLayer(map.type)
+                : mapStore.addLayer(map.type)
+            "
           >
-            <v-list-item-title v-text="map.name"> </v-list-item-title>
+            <v-list-item-title>
+              <!-- {{ mapStore.listLayersName.includes(map.name) ? "✅" : "❌" }} -->
+              {{
+                mapStore.listLayersName.includes(map.name)
+                  ? "✅ " + mapStore.getLayerLevel(map.type)
+                  : "❌"
+              }}
+              {{ map.name }}
+            </v-list-item-title>
           </v-list-item>
         </v-list>
       </v-card>
@@ -59,14 +69,10 @@
             min-width="20rem"
           >
             <template #append>
-              <v-btn
-                color="primary"
-                size="small"
-                icon="mdi-check"
-                @click="mapStore.updateMap()"
-              ></v-btn>
+              <v-btn color="primary" size="small" icon="mdi-check" @click.stop></v-btn>
             </template>
           </v-text-field>
+          <div class="text-caption">Preset 预设API</div>
           <v-list>
             <v-list-item
               color="primary"
@@ -84,6 +90,39 @@
       </v-card>
     </v-menu>
 
+    <!-- Layer opacity set -->
+    <v-menu :persistent="!$vuetify.display.smAndDown">
+      <template v-slot:activator="{ props }">
+        <v-btn
+          color="primary"
+          v-bind="props"
+          icon="mdi-layers-triple-outline"
+          size="small"
+        >
+        </v-btn>
+      </template>
+      <v-card min-width="20rem">
+        <template #title>
+          Layer Opacity 图层不透明度
+          <v-divider :thickness="5"></v-divider>
+        </template>
+        <template #text>
+          <div v-for="layer in mapStore.mapOptions.mapLayers">
+            <div class="text-caption">{{ layer.name }}</div>
+            <v-slider
+              v-model="layer.opacity"
+              min="0"
+              max="1"
+              step="0.1"
+              thumb-label
+              @click.stop
+            >
+            </v-slider>
+          </div>
+        </template>
+      </v-card>
+    </v-menu>
+
     <!-- refresh map slot -->
     <slot name="refresh">
       <v-btn size="small" icon="mdi-refresh" v-on:click="refreshMap()"> </v-btn>
@@ -93,9 +132,10 @@
 
 <script lang="ts" setup>
 import { useMapStore } from "@/stores/mapOptions"
-import { ref, watchEffect, watch, defineProps, withDefaults } from "vue"
+import { ref, computed } from "vue"
 
 const mapStore = useMapStore()
+
 defineProps({
   refreshMap: {
     type: Function,
@@ -103,6 +143,22 @@ defineProps({
       console.log("refresh map deault function")
     }
   }
+})
+
+const sortedMapItems = computed(() => {
+  const sortedItems: Array<{ type: string; name: string }> = []
+
+  for (const existLayer of mapStore.mapOptions.mapLayers) {
+    sortedItems.push({ type: existLayer.type, name: existLayer.name })
+  }
+
+  for (const map of mapStore.maps) {
+    if (!sortedItems.find((item) => item.type === map.type)) {
+      sortedItems.push({ type: map.type, name: map.name })
+    }
+  }
+
+  return sortedItems
 })
 
 const presetMapsApis = ref<string[]>([

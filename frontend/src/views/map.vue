@@ -9,7 +9,7 @@
       <p>zoom: {{ mapStore.mapOptions.zoom }}</p>
       <p>
         Map type 地图类型: <br />
-        {{ mapStore.mapOptions.mapSource.name }}
+        {{ mapStore.listLayersName }}
       </p>
       <p>
         Map API 地图代理: <br />
@@ -24,21 +24,13 @@
       ref="map"
     >
       <l-tile-layer
-        :url="mapStore.mapOptions.mapSource.url"
+        v-for="layer in mapStore.mapOptions.mapLayers"
+        :url="layer.url"
         layer-type="base"
-        name="google-satellite"
-        :attribution="mapContributors"
+        :name="layer.name"
+        :attribution="layer.name"
         :max-zoom="22"
-        :opacity="0.3"
-      ></l-tile-layer>
-
-      <l-tile-layer
-        url="http://192.168.8.220:3000/map/gm/{x}/{y}/{z}"
-        layer-type="base"
-        name="google-map"
-        attribution="overlay test"
-        :max-zoom="22"
-        :opacity="0.8"
+        :opacity="layer.opacity"
       ></l-tile-layer>
     </l-map>
   </div>
@@ -46,7 +38,7 @@
 
 <script lang="ts" setup>
 // Note that vue3 with leaflet issue: https://github.com/vue-leaflet/vue-leaflet/issues/371
-import { LMap, LTileLayer, LControlLayers } from "@vue-leaflet/vue-leaflet"
+import { LMap, LTileLayer } from "@vue-leaflet/vue-leaflet"
 import { onMounted, reactive, ref, watchEffect, watch, computed } from "vue"
 import MapTools from "@/components/MapTools.vue"
 import { useMapStore } from "@/stores/mapOptions"
@@ -63,15 +55,11 @@ const mapStore = useMapStore()
 // https://stackoverflow.com/questions/76062316/vue-leaflet-accessing-ref-object-function
 const refreshMap = () => {
   map.value?.leafletObject?.invalidateSize()
-  mapStore.updateMap()
+  mapStore.fetchMapSource()
 }
 
-const mapContributors = computed(() => {
-  return `&copy; <a href="https://www.whaleluo.top">${mapStore.mapOptions.mapSource.name}</a> contributors`
-})
-
 onMounted(() => {
-  mapStore.updateMap()
+  mapStore.initializeMap()
 })
 </script>
 

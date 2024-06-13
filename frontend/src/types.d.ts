@@ -4,4 +4,10 @@ interface NotifyParams {
   duration?: number
 }
 
+interface DialogParams {
+  title: string
+  text: string
+  isError?: boolean
+}
+
 declare module "leaflet"
