@@ -4,13 +4,7 @@
     <!-- select map -->
     <v-menu :persistent="!$vuetify.display.smAndDown">
       <template v-slot:activator="{ props }">
-        <v-btn
-          color="primary"
-          v-bind="props"
-          icon=" mdi-menu"
-          size="small"
-          v-on:click="mapStore.fetchMapSource()"
-        >
+        <v-btn color="primary" v-bind="props" icon=" mdi-menu" size="small" v-on:click="mapStore.fetchMapSource()">
         </v-btn>
       </template>
 
@@ -24,18 +18,12 @@
             v-for="map in sortedMapItems"
             :active="mapStore.listLayersName.includes(map.name)"
             @click.stop="
-              mapStore.listLayersName.includes(map.name)
-                ? mapStore.removeLayer(map.type)
-                : mapStore.addLayer(map.type)
+              mapStore.listLayersName.includes(map.name) ? mapStore.removeLayer(map.type) : mapStore.addLayer(map.type)
             "
           >
             <v-list-item-title>
               <!-- {{ mapStore.listLayersName.includes(map.name) ? "✅" : "❌" }} -->
-              {{
-                mapStore.listLayersName.includes(map.name)
-                  ? "✅ " + mapStore.getLayerLevel(map.type)
-                  : "❌"
-              }}
+              {{ mapStore.listLayersName.includes(map.name) ? "✅ " + mapStore.getLayerLevel(map.type) : "❌" }}
               {{ map.name }}
             </v-list-item-title>
           </v-list-item>
@@ -62,7 +50,7 @@
         <template #text>
           <v-text-field
             label="Proxy API"
-            v-model:model-value="mapStore.mapsApi"
+            :model-value="mapStore.mapsApi"
             density="compact"
             :rules="[urlRule]"
             @click.stop
@@ -115,13 +103,7 @@
     <!-- Layer opacity set -->
     <v-menu :persistent="!$vuetify.display.smAndDown">
       <template v-slot:activator="{ props }">
-        <v-btn
-          color="primary"
-          v-bind="props"
-          icon="mdi-layers-triple-outline"
-          size="small"
-        >
-        </v-btn>
+        <v-btn color="primary" v-bind="props" icon="mdi-layers-triple-outline" size="small"> </v-btn>
       </template>
       <v-card min-width="20rem">
         <template #title>
@@ -131,15 +113,7 @@
         <template #text>
           <div v-for="layer in mapStore.mapOptions.mapLayers">
             <div class="text-caption">{{ layer.name }}</div>
-            <v-slider
-              v-model="layer.opacity"
-              min="0"
-              max="1"
-              step="0.1"
-              thumb-label
-              @click.stop
-            >
-            </v-slider>
+            <v-slider v-model="layer.opacity" min="0" max="1" step="0.1" thumb-label @click.stop> </v-slider>
           </div>
         </template>
       </v-card>
