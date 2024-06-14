@@ -1,115 +1,125 @@
 {
-	"policy": {
-		"system": {
-			"statsOutboundUplink": true,
-			"statsOutboundDownlink": true
-		}
-	},
-	"log": {
-		"access": "",
-		"error": "",
-		"loglevel": "warning"
-	},
-	"inbounds": [
-		{
-			"tag": "socks",
-			"port": 10808,
-			"listen": "0.0.0.0",
-			"protocol": "socks",
-			"sniffing": {
-				"enabled": true,
-				"destOverride": ["http", "tls"],
-				"routeOnly": false
-			},
-			"settings": {
-				"auth": "noauth",
-				"udp": true,
-				"allowTransparent": false
-			}
-		},
-		{
-			"tag": "http",
-			"port": 10809,
-			"listen": "0.0.0.0",
-			"protocol": "http",
-			"sniffing": {
-				"enabled": true,
-				"destOverride": ["http", "tls"],
-				"routeOnly": false
-			},
-			"settings": {
-				"auth": "noauth",
-				"udp": true,
-				"allowTransparent": false
-			}
-		},
-		{
-			"tag": "api",
-			"port": 9090,
-			"listen": "127.0.0.1",
-			"protocol": "dokodemo-door",
-			"settings": {
-				"udp": false,
-				"address": "127.0.0.1",
-				"allowTransparent": false
-			}
-		}
-	],
-	"outbounds": [
-		{
-			"tag": "proxy",
-			"protocol": "shadowsocks",
-			"settings": {
-				"servers": [
-					{
-						"address": "jp3.lvuy.xyz",
-						"method": "chacha20-ietf-poly1305",
-						"ota": false,
-						"password": "gFqySwAaukt0IYMf",
-						"port": 10058,
-						"level": 1
-					}
-				]
-			},
-			"streamSettings": {
-				"network": "tcp"
-			},
-			"mux": {
-				"enabled": false,
-				"concurrency": -1
-			}
-		},
-		{
-			"tag": "direct",
-			"protocol": "freedom",
-			"settings": {}
-		},
-		{
-			"tag": "block",
-			"protocol": "blackhole",
-			"settings": {
-				"response": {
-					"type": "http"
-				}
-			}
-		}
-	],
-	"stats": {},
-	"api": {
-		"tag": "api",
-		"services": ["StatsService"]
-	},
-	"dns": {
-		"servers": ["https://1.0.0.1/dns-query"]
-	},
-	"routing": {
-		"domainStrategy": "IPOnDemand",
-		"rules": [
-			{
-				"type": "field",
-				"port": "1-65535",
-				"outboundTag": "proxy"
-			}
-		]
-	}
+  "log": {
+    "access": "",
+    "error": "",
+    "loglevel": "warning"
+  },
+  "inbounds": [
+    {
+      "tag": "socks",
+      "port": 10808,
+      "listen": "0.0.0.0",
+      "protocol": "socks",
+      "sniffing": {
+        "enabled": true,
+        "destOverride": [
+          "http",
+          "tls"
+        ],
+        "routeOnly": false
+      },
+      "settings": {
+        "auth": "noauth",
+        "udp": true,
+        "allowTransparent": false
+      }
+    },
+    {
+      "tag": "http",
+      "port": 10809,
+      "listen": "0.0.0.0",
+      "protocol": "http",
+      "sniffing": {
+        "enabled": true,
+        "destOverride": [
+          "http",
+          "tls"
+        ],
+        "routeOnly": false
+      },
+      "settings": {
+        "auth": "noauth",
+        "udp": true,
+        "allowTransparent": false
+      }
+    }
+  ],
+  "outbounds": [
+    {
+      "tag": "proxy",
+      "protocol": "shadowsocks",
+      "settings": {
+        "servers": [
+          {
+            "address": "sg2.lvuy.xyz",
+            "method": "chacha20-ietf-poly1305",
+            "ota": false,
+            "password": "kq5J8ukwrfyXgiwi",
+            "port": 10045,
+            "level": 1
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "tcp"
+      },
+      "mux": {
+        "enabled": false,
+        "concurrency": -1
+      }
+    },
+    {
+      "tag": "direct",
+      "protocol": "freedom",
+      "settings": {}
+    },
+    {
+      "tag": "block",
+      "protocol": "blackhole",
+      "settings": {
+        "response": {
+          "type": "http"
+        }
+      }
+    }
+  ],
+  "stats": {},
+  "api": {
+    "tag": "api",
+    "services": [
+      "StatsService"
+    ]
+  },
+  "policy": {
+    "system": {
+      "statsOutboundUplink": true,
+      "statsOutboundDownlink": true
+    }
+  },
+  "dns": {
+    "hosts": {
+      "dns.google": "8.8.8.8",
+      "proxy.example.com": "127.0.0.1"
+    },
+    "servers": [
+      "https://dns.google/dns-query"
+    ]
+  },
+  "routing": {
+    "domainStrategy": "IPOnDemand",
+    "rules": [
+      {
+        "type": "field",
+        "outboundTag": "direct",
+        "ip": [
+          "geoip:private"
+        ]
+      },
+      {
+        "type": "field",
+        "port": "1-65535",
+        "outboundTag": "proxy"
+      }
+    ]
+  }
 }
