@@ -2,7 +2,6 @@ import { Ref, ref, computed, watch } from "vue"
 import { defineStore } from "pinia"
 import request from "@/utils/request"
 import { dialog } from "@/utils/popup"
-import { de } from "vuetify/locale"
 
 interface MapSource {
   name: string
