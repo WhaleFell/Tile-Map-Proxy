@@ -69,21 +69,43 @@
             min-width="20rem"
           >
             <template #append>
-              <v-btn color="primary" size="small" icon="mdi-check" @click.stop></v-btn>
+              <v-btn
+                color="primary"
+                size="small"
+                icon="mdi-check"
+                @click.stop="mapStore.addPresetMapsApi(mapStore.mapsApi)"
+              ></v-btn>
             </template>
           </v-text-field>
-          <div class="text-caption">Preset 预设API</div>
+          <div class="text-caption flex justify-between mb-2">
+            Preset 预设API
+            <v-btn
+              color="primary"
+              density="compact"
+              icon="mdi-lock-reset"
+              title="Reset"
+              @click.stop="mapStore.resetPresetMapsApis()"
+            ></v-btn>
+          </div>
           <v-list>
             <v-list-item
               color="primary"
-              rounded="shaped"
-              v-for="api in presetMapsApis"
+              v-for="api in mapStore.presetMapsApis"
+              density="compact"
               :key="api"
               :value="api"
               :active="mapStore.mapsApi === api"
               @click.stop="mapStore.mapsApi = api"
             >
-              <v-list-item-title v-text="api"> </v-list-item-title>
+              <template #title> {{ api }} </template>
+              <template #append>
+                <v-btn
+                  density="compact"
+                  color="primary"
+                  icon="mdi-close"
+                  @click.stop="mapStore.deletePresetMapsApi(api)"
+                ></v-btn>
+              </template>
             </v-list-item>
           </v-list>
         </template>
@@ -160,13 +182,6 @@ const sortedMapItems = computed(() => {
 
   return sortedItems
 })
-
-const presetMapsApis = ref<string[]>([
-  "https://map1.whaleluo.top/",
-  "https://map0.whaleluo.top/",
-  "http://192.168.8.220:3000/",
-  "http://127.0.0.1/"
-])
 
 const urlRule = (url: string) => {
   const reg = /^(http|https):\/\/([\w.]+\/?)\S*/

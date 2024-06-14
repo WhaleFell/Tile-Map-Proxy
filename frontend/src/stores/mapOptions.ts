@@ -2,6 +2,7 @@ import { Ref, ref, computed, watch } from "vue"
 import { defineStore } from "pinia"
 import request from "@/utils/request"
 import { dialog } from "@/utils/popup"
+import { de } from "vuetify/locale"
 
 interface MapSource {
   name: string
@@ -29,6 +30,38 @@ const isHttps = (): boolean => {
   return location.protocol === "https:"
 }
 
+// Load and store the map preset Maps apis
+class ManageMapsApis {
+  static KEY = "mapsApis"
+  static presetMapsApis: Array<string> = [
+    "https://map1.whaleluo.top/",
+    "https://map0.whaleluo.top/",
+    "http://192.168.8.220:3000/",
+    "http://127.0.0.1/"
+  ]
+
+  constructor() {
+    console.log(`ManageMapsApis is a static class, can't be instantiated!`)
+  }
+
+  static get(): string[] {
+    const data = localStorage.getItem(this.KEY)
+    if (data) {
+      return JSON.parse(data)
+    }
+    return this.presetMapsApis
+  }
+
+  static set(value: string[]): void {
+    localStorage.setItem(this.KEY, JSON.stringify(value))
+  }
+
+  static reset() {
+    localStorage.removeItem(this.KEY)
+    localStorage.setItem(this.KEY, JSON.stringify(this.presetMapsApis))
+  }
+}
+
 export const useMapStore = defineStore("map", () => {
   // state
   const mapOptions = ref<MapOptions>({
@@ -49,6 +82,20 @@ export const useMapStore = defineStore("map", () => {
 
   // Show detail information of the map
   const showDetail = ref<boolean>(false)
+
+  // Preset maps apis
+  const presetMapsApis = ref<string[]>(ManageMapsApis.get())
+
+  // Listenning presetMapsApis change
+  // Note: deep: true is required to watch the array change
+  watch(
+    presetMapsApis,
+    (value) => {
+      console.log(`Preset maps apis updated: ${value}`)
+      ManageMapsApis.set(value)
+    },
+    { deep: true }
+  )
 
   // Function
 
@@ -166,17 +213,47 @@ export const useMapStore = defineStore("map", () => {
     }
   }
 
+  // Delete a preset maps api
+  const deletePresetMapsApi = (api: string) => {
+    const index = presetMapsApis.value.indexOf(api)
+    if (index != -1) {
+      presetMapsApis.value.splice(index, 1)
+      console.log(`Delete preset maps api: ${api}`)
+      return
+    }
+    console.error(`Failed to delete the preset maps api: ${api} not found!`)
+  }
+
+  const addPresetMapsApi = (api: string) => {
+    if (presetMapsApis.value.indexOf(api) === -1) {
+      presetMapsApis.value.push(api)
+      console.log(`Add preset maps api: ${api}`)
+      return
+    }
+    console.error(`Failed to add the preset maps api: ${api} already exists!`)
+  }
+
+  const resetPresetMapsApis = () => {
+    console.log(`Reset preset maps apis to default`)
+    ManageMapsApis.reset()
+    presetMapsApis.value = ManageMapsApis.get()
+  }
+
   return {
     showDetail,
     mapOptions,
     maps,
     mapsApi,
     listLayersName,
+    presetMapsApis,
     fetchMapSource,
     addLayer,
     removeLayer,
     refreshMapLayers,
     getLayerLevel,
-    initializeMap
+    initializeMap,
+    deletePresetMapsApi,
+    addPresetMapsApi,
+    resetPresetMapsApis
   }
 })
