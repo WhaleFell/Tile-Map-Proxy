@@ -1,13 +1,14 @@
 declare global {
-	namespace NodeJS {
-		interface ProcessEnv {
-			NODE_ENV?: 'development' | 'production'
-			HTTP_PROXY?: string
-			PORT?: string
-			HOST?: string
-			[key: string]: string | undefined
-		}
-	}
+  namespace NodeJS {
+    interface ProcessEnv {
+      NODE_ENV?: "development" | "production"
+      HTTP_PROXY?: string
+      PORT?: string
+      HOST?: string
+      isVercel?: boolean
+      [key: string]: string | undefined
+    }
+  }
 }
 
 // If this file has no import/export statements (i.e. is a script)

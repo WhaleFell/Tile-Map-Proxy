@@ -3,16 +3,19 @@
   "scripts": {
     "cf:dev": "wrangler dev src/index.ts",
     "cf:deploy": "wrangler deploy --minify src/index.ts",
-    "node:dev": "tsx  --watch ./src/node-runner.ts",
-    "node:build":"npx esbuild ./src/node-runner.ts --bundle --minify --packages=external --drop:debugger --drop:console --outfile=./dist/index.js --platform=node --format=esm --tree-shaking=true",
-    "node:run":"node ./dist/index.js",
+    "@commmend node:dev": "tsx watch  --no-cache ./src/node-runner.ts https://www.npmjs.com/package/tsx/v/4.0.0",
+    "node:dev": "node --import tsx/esm  --inspect ./src/node-runner.ts",
+    "node:build": "npx esbuild ./src/node-runner.ts --bundle --minify --packages=external --drop:debugger --drop:console --outfile=./dist/index.js --platform=node --format=esm --tree-shaking=true",
+    "node:run": "node ./dist/index.js",
     "vercel:build": "npx esbuild ./src/vercel-runner.ts --bundle --minify --outfile=./api/index.js --platform=node --format=esm --tree-shaking=true && node addConfig.js ./api/index.js",
     "vercel:dev": "npx esbuild ./src/vercel-runner.ts --bundle --minify --outfile=./api/index.js --platform=node --format=esm --tree-shaking=true && vercel dev --listen 0.0.0.0:5000"
   },
   "dependencies": {
     "@hono/node-server": "^1.11.1",
+    "@vercel/blob": "^0.23.3",
     "dotenv": "^16.4.5",
     "hono": "^4.3.11",
+    "tsx": "^4.15.7",
     "undici": "^6.18.1"
   },
   "engines": {
