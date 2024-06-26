@@ -7,10 +7,12 @@ import { cacheUtil, RUNTIME, vercelBlobCache, FileSystemCache } from "./cache"
 
 const fileSystemCacheMiddleware = createMiddleware(async (c, next) => {
   cacheUtil as FileSystemCache
+  const urlParams = new URL(c.req.url).pathname
+
   // check exist cache
-  let existCache = (await cacheUtil.get(c.req.url)) as ReadableStream
+  let existCache = (await cacheUtil.get(urlParams)) as ReadableStream
   if (existCache) {
-    console.log(`Cache hit: ${c.req.url}`)
+    console.log(`Cache hit: ${urlParams}`)
     return c.newResponse(existCache)
   }
   await next()
@@ -18,16 +20,18 @@ const fileSystemCacheMiddleware = createMiddleware(async (c, next) => {
   // save response to cache
   const clonedResponse = c.res.clone()
   if (clonedResponse.status === 200 && clonedResponse.body) {
-    await cacheUtil.put(c.req.url, clonedResponse.body)
+    await cacheUtil.put(urlParams, clonedResponse.body)
   }
 })
 
 const vercelBlobCacheMiddleware = createMiddleware(async (c, next) => {
   // check exist cache
   cacheUtil as vercelBlobCache
-  let existCache = (await cacheUtil.get(c.req.url)) as Response
+  const urlParams = new URL(c.req.url).pathname
+
+  let existCache = (await cacheUtil.get(urlParams)) as Response
   if (existCache) {
-    console.log(`vercelBlob Cache hit: ${c.req.url}`)
+    console.log(`vercelBlob Cache hit: ${urlParams}`)
     return existCache
   }
   await next()
@@ -35,7 +39,7 @@ const vercelBlobCacheMiddleware = createMiddleware(async (c, next) => {
   // save response to cache
   const clonedResponse = c.res.clone()
   if (clonedResponse.status === 200 && clonedResponse.body) {
-    await cacheUtil.put(c.req.url, clonedResponse.body)
+    await cacheUtil.put(urlParams, clonedResponse.body)
   }
 })
 
