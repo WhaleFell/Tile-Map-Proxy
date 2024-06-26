@@ -108,8 +108,7 @@ export class FileSystemCache implements CacheInterface<ReadableStream> {
 
 export class vercelBlobCache implements CacheInterface<ReadableStream, Response> {
   keyGenerator(this: this, name: string): string {
-    const hash = crypto.createHash("md5").update(name).digest("hex")
-    return hash
+    return name
   }
 
   async get(name: string): Promise<Response | null> {
