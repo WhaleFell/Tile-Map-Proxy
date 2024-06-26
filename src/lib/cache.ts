@@ -114,7 +114,7 @@ export class vercelBlobCache implements CacheInterface<ReadableStream, Response>
   async get(name: string): Promise<Response | null> {
     const cacheKey = this.keyGenerator(name)
     try {
-      const blob = await head(cacheKey)
+      const blob = await head(`${cacheKey}.png`)
       if (blob.url) {
         // directly return the blob url
         return Response.redirect(blob.url, 302)
