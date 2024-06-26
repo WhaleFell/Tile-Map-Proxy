@@ -141,14 +141,13 @@ export class vercelBlobCache implements CacheInterface<ReadableStream, Response>
 
 // create cache util based on runtime
 export const newCacheUtil = () => {
-  if (RUNTIME === "node") {
-    console.log("Detect running in NodeJS, use FileSystemCache")
-    return new FileSystemCache()
-  }
-
   if (process.env.isVercel) {
     console.log("Detect isVercel=True, use vercelBlobCache")
     return new vercelBlobCache()
+  }
+  if (RUNTIME === "node") {
+    console.log("Detect running in NodeJS, use FileSystemCache")
+    return new FileSystemCache()
   }
 
   return {

@@ -10,6 +10,7 @@ const filePath = process.argv[2]
 
 // the content to add in the file
 const contentToAdd = `
+// fix for Vercel. esbuild JS error: Error: Dynamic require of "assert" is not supported
 // https://github.com/evanw/esbuild/issues/1921#issuecomment-1898197331
 
 import { createRequire } from 'node:module';
