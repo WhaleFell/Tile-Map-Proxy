@@ -106,18 +106,18 @@ export class FileSystemCache implements CacheInterface<ReadableStream> {
   }
 }
 
-export class vercelBlobCache implements CacheInterface<ReadableStream, Response> {
+export class vercelBlobCache implements CacheInterface<ReadableStream, string> {
   keyGenerator(this: this, name: string): string {
     return name
   }
 
-  async get(name: string): Promise<Response | null> {
+  async get(name: string): Promise<string | null> {
     const cacheKey = this.keyGenerator(name)
     try {
       const blob = await head(`https://3dj7gifstomb1kun.public.blob.vercel-storage.com/${cacheKey}.png`)
       if (blob.url) {
         // directly return the blob url
-        return Response.redirect(blob.url, 302)
+        return blob.url
       }
       return null
     } catch (error) {

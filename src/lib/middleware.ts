@@ -29,10 +29,10 @@ const vercelBlobCacheMiddleware = createMiddleware(async (c, next) => {
   cacheUtil as vercelBlobCache
   const urlParams = new URL(c.req.url).pathname
 
-  let existCache = (await cacheUtil.get(urlParams)) as Response
+  let existCache = (await cacheUtil.get(urlParams)) as string
   if (existCache) {
     console.log(`vercelBlob Cache hit: ${urlParams}`)
-    return existCache
+    return c.redirect(existCache)
   }
   await next()
 
