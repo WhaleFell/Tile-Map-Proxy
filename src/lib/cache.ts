@@ -129,7 +129,7 @@ export class vercelBlobCache implements CacheInterface<ReadableStream, Response>
   async put(name: string, value: ReadableStream<any>): Promise<boolean> {
     const cacheKey = this.keyGenerator(name)
     try {
-      const blob = await put(cacheKey, value, { access: "public" })
+      const blob = await put(`${cacheKey}.png`, value, { access: "public", addRandomSuffix: false })
       return true
     } catch (error) {
       console.log(`Failed to set vercel blob cache: ${cacheKey} ${error}`)
